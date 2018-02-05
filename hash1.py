@@ -1,12 +1,23 @@
 #! /usr/bin/python
 # Define a procedure,
 
-# hashtable_lookup(htable,key)
+# hashtable_update(htable,key,value)
 
-# that takes two inputs, a hashtable
-# and a key (string),
-# and returns the value associated
-# with that key.
+# that updates the value associated with key. If key is already in the
+# table, change the value to the new value. Otherwise, add a new entry
+# for the key and value.
+
+def hashtable_update(htable,key,value):
+    if hashtable_lookup(htable,key)==None:
+        hashtable_add(htable,key,value)
+    else:
+        bucket = hashtable_get_bucket(htable,key)
+        for entry in bucket:
+            if entry[0] == key:
+                entry[1]=value
+        
+        
+    return htable
 
 def hashtable_lookup(htable,key):
     i=hash_string(key,len(htable))
