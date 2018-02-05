@@ -24,28 +24,49 @@ def union(p,q):
     for e in q:
         if e not in p:
             p.append(e)
-def get_all_links(page):
-    links = []
-    while True:
-        url,endpos = get_next_target(page)
-        if url:
-            links.append(url)
-            page = page[endpos:]
-        else:
-            break
+def get_all_links(page): 
+    links = [] 
+    while True: 
+        url, endpos = get_next_target(page)
+        if url: 
+            links.append(url) page = page[endpos:] 
+        else: 
+            break 
     return links
-def crawl_web(seed):
-    tocrawl = [seed]
-    crawled = []
-    while tocrawl:
-        page = tocrawl.pop()
-        if page not in crawled:
-            code=get_page(page)
-            tocrawl.append(get_all_links(code))
-            crawled.append(page)
-    return crawled
-seed="http://xkcd.com/353" 
 
-print crawl_web(seed)
+def crawl_web(seed): 
+    tocrawl = [seed] 
+    crawled = [] 
+    index = [] # replace list with dictionary here to use dictionary:{}
+    while tocrawl: 
+        page = tocrawl.pop()
+        if page not in crawled: 
+            content = get_page(page) 
+            add_page_to_index(index, page, content) 
+            union(tocrawl, get_all_links(content)) 
+            crawled.append(page) 
+    return index 
+
+def add_page_to_index(index, url, content): 
+    words = content.split() 
+    for word in words: 
+        add_to_index(index, word, url) 
+                                                        # to use dictionary instead of list in our index
+def add_to_index(index, keyword, url):                  #def add_to_index(index,keyword,url):
+    for entry in index:                                 #   if keyword in index:
+        if entry[0] == keyword: entry[1].append(url)    #       index[keyword].append(url)
+            return                                      #   else:    
+    # not found, add new keyword to index               #       index[keyword]=[url]
+    index.append([keyword, [url]]) 
+
+def lookup(index, keyword):                             #def lookup(index, keyword):
+                                                        #    if keyword in index:
+                                                        #          return index[keyword]
+                                                        #   return None
+   for entry in index:                                 
+        if entry[0] == keyword:                         
+            return entry[1] 
+    return None
+
 
 
