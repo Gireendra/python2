@@ -1,4 +1,19 @@
 #! /usr/bin/python
+# Define a procedure,
+
+# hashtable_lookup(htable,key)
+
+# that takes two inputs, a hashtable
+# and a key (string),
+# and returns the value associated
+# with that key.
+
+def hashtable_lookup(htable,key):
+    i=hash_string(key,len(htable))
+    for x in range(len(htable[i])):
+        if key in htable[i][x]:
+            return htable[i][x][1]
+    return None
 def hashtable_add(htable,key,value):
     htable[hash_string(key,len(htable))].append([key,value])
         return htable
@@ -17,13 +32,8 @@ def hash_string(keyword,buckets):
     for s in keyword:
         out = (out + ord(s)) % buckets
     return out
-table = make_hashtable(5)
-hashtable_add(table,'Bill', 17)
-hashtable_add(table,'Coach', 4)
-hashtable_add(table,'Ellis', 11)
-hashtable_add(table,'Francis', 13)
-hashtable_add(table,'Louis', 29)
-hashtable_add(table,'Nick', 2)
-hashtable_add(table,'Rochelle', 4)
-hashtable_add(table,'Zoe', 14)
-print table
+
+table = [[['Ellis', 11], ['Francis', 13]], [], [['Bill', 17], ['Zoe', 14]],
+[['Coach', 4]], [['Louis', 29], ['Nick', 2], ['Rochelle', 4]]]
+
+print hashtable_lookup(table, 'Francis')
