@@ -17,3 +17,13 @@ def hash_string(keyword,buckets):
     for s in keyword:
         out = (out + ord(s)) % buckets
     return out
+table = make_hashtable(5)
+hashtable_add(table,'Bill', 17)
+hashtable_add(table,'Coach', 4)
+hashtable_add(table,'Ellis', 11)
+hashtable_add(table,'Francis', 13)
+hashtable_add(table,'Louis', 29)
+hashtable_add(table,'Nick', 2)
+hashtable_add(table,'Rochelle', 4)
+hashtable_add(table,'Zoe', 14)
+print table
